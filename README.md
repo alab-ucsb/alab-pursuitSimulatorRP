@@ -2,17 +2,21 @@
 
 Desktop app for generating Randomized Pursuit (RP) sessions. Runs locally; nothing is stored on a server.
 
-## Quick start (Windows)
+## Quick start
 
 1. Install, once:
    - [Node.js 20+](https://nodejs.org)
-   - [Python 3.11](https://www.python.org/downloads/release/python-3119/) (must be 3.11, newer versions break the backend packages)
+   - [Python 3.11](https://www.python.org/downloads/release/python-3119/) (must be 3.11, newer versions break the backend packages). On a Mac with Homebrew: `brew install python@3.11`.
 2. Download or clone this repo.
-3. Double-click **`run.bat`** in the top folder.
+3. Start it:
+   - **Windows:** double-click **`run.bat`** in the top folder.
+   - **macOS / Linux:** open Terminal in the top folder and run `bash run.sh`.
 4. The first run takes about 5-10 minutes while it installs everything. Later runs start in seconds.
 5. When the app opens, choose a folder for your saved data.
 
-If setup fails, the window stays open with the error message.
+If setup fails, the error is printed (on Windows the window stays open so you can read it).
+
+> **macOS note:** `run.sh` has not been tested on a Mac yet. If it fails, please report the error output. The prebuilt installer (`build.ps1`) is Windows-only.
 
 ## Where things go
 
