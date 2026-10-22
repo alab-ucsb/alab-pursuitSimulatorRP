@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: ./pursuit-simulator-backend
+      dockerfile: ../Dockerfile.backend
+    ports:
+      - "3080:3080"
+    volumes:
+      - "/volume1/ASA_Lab/Data/Xiaoxiao/pursuitProject/Laser Simulator/trajectories:/app/trajectories"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./pursuit-simulator-frontend
+      dockerfile: ../Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    restart: unless-stopped
