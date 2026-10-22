@@ -10,7 +10,7 @@ Desktop app for generating Randomized Pursuit (RP) sessions. Runs locally; nothi
 2. Download or clone this repo.
 3. Start it:
    - **Windows:** double-click **`run.bat`** in the top folder.
-   - **macOS / Linux:** open Terminal in the top folder and run `bash run.sh`.
+   - **macOS / Linux:** open Terminal in the top folder and run `bash run.sh` or type "bash" and drag the file into Terminal.
      
            -Select "Terminal" from Launchpad
            -Highlight "alab-pursuitSimulatorRP-main" folder and copy path name with "option+command+C"
