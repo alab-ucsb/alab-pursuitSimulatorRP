@@ -11,7 +11,14 @@ Desktop app for generating Randomized Pursuit (RP) sessions. Runs locally; nothi
 3. Start it:
    - **Windows:** double-click **`run.bat`** in the top folder.
    - **macOS / Linux:** open Terminal in the top folder and run `bash run.sh`.
-4. The first run takes about 5-10 minutes while it installs everything. Later runs start in seconds.
+        -Select "Terminal" from Launchpad
+        -Highlight "alab-pursuitSimulatorRP-main" folder and copy path name with "option+command+C"
+        -In Terminal, type "cd 'path/to/folder'" and hit enter
+        -Try `bash run.sh'. If it starts install packages, then you are good
+        -If error says there is incorrect python and you are using conda, create new environment by typing "conda create -n my_env python=3.11"
+        -Then "conda activate my_env"
+        -Run 'bash run.sh' again
+4. The first run takes about 2-5 minutes while it installs everything. Later runs start in seconds.
 5. When the app opens, choose a folder for your saved data.
 
 If setup fails, the error is printed (on Windows the window stays open so you can read it).
