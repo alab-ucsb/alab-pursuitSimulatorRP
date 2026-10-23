@@ -1,7 +1,5 @@
 # Pursuit Simulator RP
 
-Desktop app for generating Randomized Pursuit (RP) sessions. Runs locally; nothing is stored on a server.
-
 ## Quick start
 
 1. Install, once:
