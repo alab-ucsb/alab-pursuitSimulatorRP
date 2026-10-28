@@ -23,7 +23,6 @@
 
 If setup fails, the error is printed (on Windows the window stays open so you can read it).
 
-> **macOS note:** `run.sh` has not been tested on a Mac yet. If it fails, please report the error output. The prebuilt installer (`build.ps1`) is Windows-only.
 
 ## Where things go
 
