@@ -1,0 +1,11 @@
+# Packages for the pursuit-simulator conda environment (setup steps are in README.md).
+# Same versions as pursuit-simulator-backend/backend/requirements.txt.
+python=3.11.*
+numpy=1.26.4
+pandas=2.2.2
+scipy=1.13.1
+fastapi=0.115.0
+uvicorn=0.30.0
+python-multipart=0.0.9
+# Only needed to change the frontend (npm run build). Running the app does not use it.
+nodejs=20.*
