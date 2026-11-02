@@ -20,15 +20,12 @@ import math
 import numpy as np
 import pandas as pd
 import io
-import os
 
 from simulation import (
     build_distributions, run_trial_bounded, run_trial_periodic,
     run_trial_ricochet, compute_histogram, smooth_trajectory,
     reinterpolate_trajectory
 )
-
-DATA_DIR = os.path.abspath(os.environ.get("PURSUIT_DATA_DIR", "trajectories"))
 
 app = FastAPI(title="Pursuit Trajectory Simulator")
 
@@ -126,7 +123,6 @@ class SimulationParams(BaseModel):
     name: Optional[str] = None
 
 
-RANDOMIZED_DIR = os.path.join(DATA_DIR, "randomized")
 
 
 class RegenParams(BaseModel):
@@ -587,33 +583,14 @@ def export_csv(p: SimulationParams):
     df = pd.DataFrame(rows)
     csv_content = df.to_csv(index=False)
 
-    # Auto-save to trajectories/randomized/
-    name = p.name or f"RP{_get_next_rp_number()}"
-    os.makedirs(RANDOMIZED_DIR, exist_ok=True)
-    save_path = os.path.join(RANDOMIZED_DIR, f"{name}.csv")
-    with open(save_path, "w", newline="") as f:
-        f.write(csv_content)
-    print(f"[EXPORT] Saved randomized trajectory to {save_path}")
+    # Nothing is saved on disk: the browser downloads the CSV.
+    name = p.name or "trajectories"
 
     return StreamingResponse(
         iter([csv_content]),
         media_type="text/csv",
         headers={"Content-Disposition": f"attachment; filename={name}.csv"},
     )
-
-
-def _get_next_rp_number():
-    """Get the next sequential number for RP naming."""
-    os.makedirs(RANDOMIZED_DIR, exist_ok=True)
-    existing = []
-    for f in os.listdir(RANDOMIZED_DIR):
-        if f.startswith("RP") and f.endswith(".csv"):
-            stem = f.replace(".csv", "")
-            try:
-                existing.append(int(stem[2:]))
-            except ValueError:
-                pass
-    return max(existing) + 1 if existing else 1
 
 
 @app.post("/upload-durations")

@@ -4,13 +4,11 @@
     python launch.py
 
 Options:
-    --data-dir FOLDER   where exported RPs are kept (default: Documents/PursuitSimulator)
     --port N            port to use (default: 3080, or any free port if that one is taken)
     --no-browser        don't open a browser tab
 Press Ctrl+C in this window to quit.
 """
 import argparse
-import os
 import socket
 import sys
 import threading
@@ -58,15 +56,10 @@ def open_browser_when_ready(port, url):
 
 def main():
     ap = argparse.ArgumentParser(description="Start Pursuit Simulator RP.")
-    ap.add_argument("--data-dir", default=str(Path.home() / "Documents" / "PursuitSimulator"))
     ap.add_argument("--port", type=int, default=3080)
     ap.add_argument("--no-browser", action="store_true")
     args = ap.parse_args()
     print("Starting Pursuit Simulator RP (the first start can take up to a minute)...", flush=True)
-
-    data_dir = Path(args.data_dir).expanduser().resolve()
-    data_dir.mkdir(parents=True, exist_ok=True)
-    os.environ["PURSUIT_DATA_DIR"] = str(data_dir)  # the backend reads this when it is imported
 
     try:
         import uvicorn
@@ -88,7 +81,6 @@ def main():
     if port != args.port:
         print(f"Port {args.port} is in use, so using {port} instead.", flush=True)
     print(f"Pursuit Simulator RP is running at {url}", flush=True)
-    print(f"Saved exports go in: {data_dir / 'randomized'}", flush=True)
     print("Press Ctrl+C to quit.", flush=True)
     uvicorn.run(backend.app, host="127.0.0.1", port=port, log_level="warning")
 

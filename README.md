@@ -8,16 +8,18 @@ You need [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (or Anacond
 
 1. Install Miniconda, if you don't have conda already.
 2. Download this repo (green **Code** button, then **Download ZIP**) and unzip it.
-3. Open a terminal in the unzipped folder. On a Mac use Terminal. On Windows use **Anaconda Prompt** (it is in the Start menu after installing conda).
-4. run
+3. Open a terminal. On a Mac use Terminal. On Windows use **Anaconda Prompt** (it is in the Start menu after installing conda).
+4. Run this in the terminal, using the path to the folder you unzipped:
+
        cd path/to/downloadedRepo
-6. Set up once (a few minutes):
+
+5. Set up once (a few minutes):
 
        conda create -n pursuit-simulator --override-channels -c conda-forge --file conda-packages.txt -y
 
    The `--override-channels -c conda-forge` part keeps conda on the free conda-forge channel, so it won't stop to ask you to accept Anaconda's Terms of Service.
 
-7. Start the app (every time):
+6. Start the app (every time):
 
        conda activate pursuit-simulator
        python launch.py
@@ -26,16 +28,15 @@ Your browser opens the app. Press Ctrl+C in the terminal to quit.
 
 ## Where things go
 
-- **Saved exports** are kept in `Documents/PursuitSimulator/randomized/`. To use another folder: `python launch.py --data-dir "C:\path\to\folder"`.
-- **Export CSV** also downloads the file through your browser.
-- Other options: `--port 3080` (used automatically if free, otherwise another port is picked) and `--no-browser`.
+- **Export CSV** downloads the file through your browser, to its usual Downloads folder. Nothing else is saved on your computer.
+- Options: `--port 3080` (used automatically if free, otherwise another port is picked) and `--no-browser`.
 
 ## If something goes wrong
 
 - **"Missing package"**: you skipped `conda activate pursuit-simulator`. Run it and try again.
 - **"conda: command not found"**: close and reopen the terminal after installing Miniconda (on Windows, use Anaconda Prompt).
 - **The very first start is slow** (up to a minute). Later starts take a couple of seconds.
-- **"Terms of Service have not been accepted"**: conda was run without the `--override-channels -c conda-forge` part of the setup command. Run the full command from step 4.
+- **"Terms of Service have not been accepted"**: conda was run without the `--override-channels -c conda-forge` part of the setup command. Run the full command from step 5.
 - **After downloading a newer version of the repo**, run this once, then start as usual:
 
       conda install -n pursuit-simulator --override-channels -c conda-forge --file conda-packages.txt -y
