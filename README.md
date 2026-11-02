@@ -24,6 +24,7 @@ You need [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (or Anacond
        conda activate pursuit-simulator
        python launch.py
 * might need to copy full path to the "launch.py"
+  
 Your browser opens the app. Press Ctrl+C in the terminal to quit.
 
 ## Where things go
