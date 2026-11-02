@@ -1,4 +1,4 @@
-# Pursuit Simulator RP — local desktop app (Randomized only)
+# Pursuit Simulator RP — local desktop app 
 
 Electron shell around the Randomized (RP) generator: React frontend + FastAPI backend, nothing stored on a server. The Characterized (CP/CPP) and Mixed modes are not part of this build.
 
