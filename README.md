@@ -4,7 +4,7 @@ App for generating Randomized Pursuit (RP) sessions. It runs entirely on your ow
 
 ## Run it
 
-You need [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (or Anaconda). That is the only thing to install: the environment below brings its own Python and every package, so there is no separate Python or Node to install and no version to match.
+You need [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (or Anaconda). That is the only thing to install: the environment below brings its own Python and every package.
 
 1. Install Miniconda, if you don't have conda already.
 2. Download this repo (green **Code** button, then **Download ZIP**) and unzip it.
