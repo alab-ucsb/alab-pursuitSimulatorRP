@@ -2,7 +2,7 @@
 
 Desktop app for generating Randomized Pursuit (RP) sessions. Runs locally; nothing is stored on a server.
 
-## Install (no Node or Python needed)
+## Install 
 
 Download the installer for your computer from the [Releases page](../../releases/latest):
 
