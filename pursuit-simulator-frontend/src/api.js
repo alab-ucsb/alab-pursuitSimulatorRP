@@ -4,10 +4,14 @@
 
 export const desktop = typeof window !== "undefined" ? window.pursuit : undefined;
 
+// A production build opened over http(s) was served by launch.py, so the backend is on the same address.
+const servedByBackend =
+  process.env.NODE_ENV === "production" && typeof window !== "undefined" && window.location.protocol.startsWith("http");
+
 export const API =
   (desktop && desktop.apiBase) ||
   process.env.REACT_APP_API ||
-  "http://localhost:3080";
+  (servedByBackend ? window.location.origin : "http://localhost:3080");
 
 // Save a single file. Desktop: native Save As dialog. Browser: normal download.
 // Returns the saved path (desktop), or null if cancelled / browser download.

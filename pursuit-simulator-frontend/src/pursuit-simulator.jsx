@@ -372,7 +372,7 @@ const runSimulation = useCallback(async () => {
               <>
                 Start the Python server first:<br/>
                 <code style={{ color: "#3d8bfd", background: "#0f1218", padding: "3px 10px", borderRadius: 3, display: "inline-block", marginTop: 8 }}>
-                  py -3.11 -m uvicorn main:app --reload --port 3080
+                  python -m uvicorn main:app --reload --port 3080
                 </code>
               </>
             )}
