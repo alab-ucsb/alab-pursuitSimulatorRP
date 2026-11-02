@@ -9,13 +9,15 @@ You need [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (or Anacond
 1. Install Miniconda, if you don't have conda already.
 2. Download this repo (green **Code** button, then **Download ZIP**) and unzip it.
 3. Open a terminal in the unzipped folder. On a Mac use Terminal. On Windows use **Anaconda Prompt** (it is in the Start menu after installing conda).
-4. Set up once (a few minutes):
+4. run
+       cd path/to/downloadedRepo
+6. Set up once (a few minutes):
 
        conda create -n pursuit-simulator --override-channels -c conda-forge --file conda-packages.txt -y
 
    The `--override-channels -c conda-forge` part keeps conda on the free conda-forge channel, so it won't stop to ask you to accept Anaconda's Terms of Service.
 
-5. Start the app (every time):
+7. Start the app (every time):
 
        conda activate pursuit-simulator
        python launch.py
