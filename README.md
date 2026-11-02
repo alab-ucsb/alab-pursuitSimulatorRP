@@ -4,24 +4,13 @@ Desktop app for generating Randomized Pursuit (RP) sessions. Runs locally; nothi
 
 ## Install 
 
-Download the installer for your computer from the [Releases page](../../releases/latest):
+Download the installer for your computer:
 
 | Computer | File |
 |---|---|
 | Windows | `Pursuit-Simulator-RP-Setup-x.y.z.exe` |
 | Mac with Apple silicon (M1, M2, M3, M4...) | `Pursuit-Simulator-RP-x.y.z-mac-arm64.dmg` |
 | Mac with an Intel chip | `Pursuit-Simulator-RP-x.y.z-mac-x64.dmg` |
-
-Not sure which Mac you have? Apple menu > About This Mac: "Chip: Apple M..." means Apple silicon, "Processor: Intel..." means Intel.
-
-The installers are not code-signed, so your computer will warn you the first time. That is expected:
-
-- **Windows:** SmartScreen says "Windows protected your PC". Choose **More info**, then **Run anyway**. After that the installer has no questions: it installs for your account (no administrator password needed) and opens the app.
-- **Mac:** open the `.dmg`, drag the app into **Applications**, then open it. macOS says it can't verify the developer.
-  - macOS 15 (Sequoia) or newer: click **Done**, open **System Settings > Privacy & Security**, scroll down and click **Open Anyway** next to the app's name.
-  - macOS 14 or older: right-click the app and choose **Open**, then **Open** again.
-  - If the app is reported as "damaged", run this in Terminal once and open it again:
-    `xattr -cr "/Applications/Pursuit Simulator RP.app"`
 
 When the app opens, choose a folder for your saved data.
 
