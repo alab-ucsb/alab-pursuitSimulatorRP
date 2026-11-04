@@ -1,7 +1,7 @@
 """Start Pursuit Simulator RP and open it in your browser.
 
     conda activate pursuit-simulator
-    python launch.py
+    python pursuitsimulator.py
 
 Options:
     --port N            port to use (default: 3080, or any free port if that one is taken)
@@ -68,7 +68,7 @@ def main():
         import main as backend
     except ModuleNotFoundError as e:
         sys.exit(f"Missing package: {e.name}. Run this inside the conda environment:\n"
-                 "    conda activate pursuit-simulator\n    python launch.py\n"
+                 "    conda activate pursuit-simulator\n    python pursuitsimulator.py\n"
                  "(create it first; the command is in README.md)")
 
     backend.app.mount("/app", StaticFiles(directory=str(find_frontend()), html=True), name="ui")
