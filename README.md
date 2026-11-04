@@ -22,8 +22,8 @@ You need [Miniconda](https://docs.conda.io/en/latest/miniconda.html) (or Anacond
 6. Start the app (every time):
 
        conda activate pursuit-simulator
-       python launch.py
-* Might need to copy full path to the "launch.py"
+       python pursuitsimulator.py
+* Might need to copy full path to the "pursuitsimulator.py"
   
 Your browser opens the app. Press Ctrl+C in the terminal to quit.
 
@@ -48,22 +48,22 @@ Your browser opens the app. Press Ctrl+C in the terminal to quit.
 
 The conda environment also includes Node.js, so you can edit everything without installing anything else.
 
-- **Backend** (`pursuit-simulator-backend/backend/`): edit, then quit with Ctrl+C and run `python launch.py` again.
+- **Backend** (`pursuit-simulator-backend/backend/`): edit, then quit with Ctrl+C and run `python pursuitsimulator.py` again.
 - **Frontend** (`pursuit-simulator-frontend/src/`): build it, then start the app again:
 
       cd pursuit-simulator-frontend
       npm ci
       npm run build
       cd ..
-      python launch.py
+      python pursuitsimulator.py
 
-  `launch.py` uses your fresh `pursuit-simulator-frontend/build` when it exists. To share the change, copy that `build` folder over `frontend-build`, which is the prebuilt copy that ships with the repo.
+  `pursuitsimulator.py` uses your fresh `pursuit-simulator-frontend/build` when it exists. To share the change, copy that `build` folder over `frontend-build`, which is the prebuilt copy that ships with the repo.
 - For live reload while developing, run the backend with `python -m uvicorn main:app --reload --port 3080` from the backend folder, and `npm start` in the frontend folder.
 
 ## Project layout
 
-- `launch.py` - starts the backend and opens the app in your browser
+- `pursuitsimulator.py` - starts the backend and opens the app in your browser
 - `conda-packages.txt` - what goes into the conda environment (Python 3.11, numpy, pandas, scipy, FastAPI, Node.js)
 - `pursuit-simulator-backend/` - FastAPI backend (Python)
 - `pursuit-simulator-frontend/` - React frontend (source)
-- `frontend-build/` - the prebuilt frontend that `launch.py` serves, so Node is not needed to run the app
+- `frontend-build/` - the prebuilt frontend that `pursuitsimulator.py` serves, so Node is not needed to run the app
