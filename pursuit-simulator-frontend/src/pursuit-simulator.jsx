@@ -76,7 +76,6 @@ async function apiSmooth(trialIndex, trajectory, smoothing) {
 
 export default function PursuitSimulator() {
   const [params, setParams] = useState({
-    mode: "Bounded",
     a_dist: "Wrapped", l_dist: "Skewed",
     angular_min: -30, angular_max: 60,
     linear_min: 10, linear_max: 35,
@@ -473,9 +472,6 @@ const runSimulation = useCallback(async () => {
             </>}
 
             {paramTab === "arena" && <>
-              <Section title="Mode">
-                <SelectRow label="Mode" value={params.mode} options={["Bounded","Periodic","Ricochet"]} onChange={v => updateParam("mode", v)} />
-              </Section>
               <Section title="Arena Size">
                 <InputRow label="Width (cm)" value={params.arena_width} step={1} onChange={v => updateParam("arena_width", v)} />
                 <InputRow label="Height (cm)" value={params.arena_height} step={1} onChange={v => updateParam("arena_height", v)} />
