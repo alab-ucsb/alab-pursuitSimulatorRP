@@ -22,9 +22,8 @@ import pandas as pd
 import io
 
 from simulation import (
-    build_distributions, run_trial_bounded, run_trial_periodic,
-    run_trial_ricochet, compute_histogram, smooth_trajectory,
-    reinterpolate_trajectory
+    build_distributions, run_trial_bounded, compute_histogram,
+    smooth_trajectory, reinterpolate_trajectory
 )
 
 app = FastAPI(title="Pursuit Trajectory Simulator")
@@ -46,8 +45,6 @@ class SimulationParams(BaseModel):
     """Parameters for running a full simulation."""
 
     balanced_speed: bool = True
-
-    mode: str = "Bounded"
 
     arena_width: float = 60.0   # cm
     arena_height: float = 60.0  # cm
@@ -92,7 +89,7 @@ class SimulationParams(BaseModel):
     start_min_y: float = -0.8
     start_max_y: float = 0.8
 
-    # Bounded mode: wall avoidance parameters
+    # Wall avoidance parameters
     wall_threshold: float = 2.0
     wall_nudge: float = 0.3
     wall_nudge_max: float = 30.0
@@ -173,45 +170,22 @@ def run_single_trial(p: SimulationParams, d: int, a, l, start_x=None, start_y=No
 
         shape_frames = d * 3 if p.reinterpolate else d
 
-        if p.mode == "Periodic":
-            result = run_trial_periodic(
-                shape_frames, a, l,
-                arena_x=(-half_w, half_w),
-                arena_y=(-half_h, half_h),
-                display_x=(-p.scale_x, p.scale_x),
-                display_y=(-p.scale_y, p.scale_y),
-                t_mod_min=p.t_mod_min,
-                t_mod_max=p.t_mod_max,
-                balanced_speed=p.balanced_speed,
-            )
-        elif p.mode == "Ricochet":
-            result = run_trial_ricochet(
-                shape_frames, a, l,
-                arena_x=(-half_w, half_w),
-                arena_y=(-half_h, half_h),
-                display_x=(-p.scale_x, p.scale_x),
-                display_y=(-p.scale_y, p.scale_y),
-                t_mod_min=p.t_mod_min,
-                t_mod_max=p.t_mod_max,
-                balanced_speed=p.balanced_speed,
-            )
-        else:
-            result = run_trial_bounded(
-                shape_frames, a, l,
-                arena_x=(-half_w, half_w),
-                arena_y=(-half_h, half_h),
-                display_x=(-p.scale_x, p.scale_x),
-                display_y=(-p.scale_y, p.scale_y),
-                wall_threshold=p.wall_threshold,
-                t_mod_min=p.t_mod_min,
-                t_mod_max=p.t_mod_max,
-                wall_nudge=p.wall_nudge,
-                wall_nudge_max=p.wall_nudge_max,
-                smoothing=p.smoothing,
-                start_x=retry_x,
-                start_y=retry_y,
-                balanced_speed=p.balanced_speed,
-            )
+        result = run_trial_bounded(
+            shape_frames, a, l,
+            arena_x=(-half_w, half_w),
+            arena_y=(-half_h, half_h),
+            display_x=(-p.scale_x, p.scale_x),
+            display_y=(-p.scale_y, p.scale_y),
+            wall_threshold=p.wall_threshold,
+            t_mod_min=p.t_mod_min,
+            t_mod_max=p.t_mod_max,
+            wall_nudge=p.wall_nudge,
+            wall_nudge_max=p.wall_nudge_max,
+            smoothing=p.smoothing,
+            start_x=retry_x,
+            start_y=retry_y,
+            balanced_speed=p.balanced_speed,
+        )
 
         if p.reinterpolate:
             shape_x = list(result["x"])
@@ -233,15 +207,14 @@ def run_single_trial(p: SimulationParams, d: int, a, l, start_x=None, start_y=No
                 reinterp["shapeY"] = shape_y
                 result = reinterp
         
-        # Check bounds (Bounded only)
-        if p.mode == "Bounded":
-            buffer = 0.01
-            if not (min(result["normX"]) > -p.scale_x + buffer and max(result["normX"]) < p.scale_x - buffer and \
-                    min(result["normY"]) > -p.scale_y + buffer and max(result["normY"]) < p.scale_y - buffer):
-                print(f"  Out of bounds on attempt {attempt + 1}, regenerating...")
-                continue
-        
-        # Check first 25% doesn't enter disabled cells (all modes)
+        # Check bounds
+        buffer = 0.01
+        if not (min(result["normX"]) > -p.scale_x + buffer and max(result["normX"]) < p.scale_x - buffer and \
+                min(result["normY"]) > -p.scale_y + buffer and max(result["normY"]) < p.scale_y - buffer):
+            print(f"  Out of bounds on attempt {attempt + 1}, regenerating...")
+            continue
+
+        # Check first 25% doesn't enter disabled cells
         if p.disabled_cells and grid > 0:
             quarter = len(result["x"]) // 4
             entered_disabled = False
@@ -406,7 +379,7 @@ def reinterpolate_all(req: ReinterpolateParams):
         a_shape=p.a_shape, a_scale=p.a_scale,
         l_shape=p.l_shape, l_scale=p.l_scale,
         hz=p.hz, speed_min=p.speed_min, speed_max=p.speed_max,
-        speed_peak=p.speed_peak, mode=p.mode,
+        speed_peak=p.speed_peak,
     )
 
     trajectories = {}
@@ -444,7 +417,7 @@ def run_simulation(p: SimulationParams):
             a_shape=p.a_shape, a_scale=p.a_scale,
             l_shape=p.l_shape, l_scale=p.l_scale,
             hz=p.hz, speed_min=p.speed_min, speed_max=p.speed_max,
-            speed_peak=p.speed_peak, mode=p.mode,
+            speed_peak=p.speed_peak,
         )
 
         trajectories = {}
@@ -480,15 +453,13 @@ def run_simulation(p: SimulationParams):
             trajectories[str(trial)] = result
 
         linear_hist = compute_histogram(l)
-        if p.mode == "Bounded":
-            # Scale histogram x-axis from cm/frame back to cm/s for display
-            linear_hist["x"] = [v * p.hz for v in linear_hist["x"]]
+        # Scale histogram x-axis from cm/frame back to cm/s for display
+        linear_hist["x"] = [v * p.hz for v in linear_hist["x"]]
 
         return {
             "trajectories": trajectories,
             "angular_hist": compute_histogram(a),
             "linear_hist": linear_hist,
-            "mode": p.mode,
         }
     except Exception as e:
         print(f"[ERROR] {e}")
@@ -508,7 +479,7 @@ def regenerate_trial(rp: RegenParams):
         a_shape=p.a_shape, a_scale=p.a_scale,
         l_shape=p.l_shape, l_scale=p.l_scale,
         hz=p.hz, speed_min=p.speed_min, speed_max=p.speed_max,
-        speed_peak=p.speed_peak, mode=p.mode,
+        speed_peak=p.speed_peak,
     )
 
     d = get_trial_duration(p, rp.trial_index)
